@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 17:37:38 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/03/30 14:54:10 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/18 18:54:31 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,18 @@ void print_list(t_sort *list, int on)
 			ft_printf("%s\n", tmp->str);
 		}
 		tmp = tmp->next;
+	}
+}
+
+void del_list(t_sort **list)
+{
+	t_sort *freeme;
+
+	while (*list)
+	{
+		ft_strdel(&(*list)->str);
+		freeme = *list;
+		*list = (*list)->next;
+		free(freeme);
 	}
 }

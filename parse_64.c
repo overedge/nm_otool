@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:21:02 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/03/30 14:56:05 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/18 19:50:16 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ void	print_output_64(struct symtab_command *sym, char *ptr, t_compt *compteur)
 	while (i < sym->nsyms)
 	{
 		c = flag_64(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);
-		if (ft_strcmp(ft_strsub(stringtable + el[i].n_un.n_strx,  0, 7), "radr://"))
+		if (ft_strcmp(stringtable + el[i].n_un.n_strx, "radr://5614542"))
 			add_list(el[i].n_value, c, stringtable + el[i].n_un.n_strx, &sort);
 		i++;
 	}
 	sort_list(&sort);
 	print_list(sort, 1);
+	del_list(&sort);
 }
 
 

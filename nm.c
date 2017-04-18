@@ -6,11 +6,28 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/03/30 15:40:40 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/18 18:22:52 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
+
+
+void	ft_error(char *str_error)
+{
+	ft_putstr_fd(str_error, 2);
+	exit(EXIT_FAILURE);
+}
+
+void	handler_64_reverse(char *ptr)
+{
+	
+}
+
+void	handler_32_reverse(char *ptr)
+{
+	
+}
 
 void	nm(char *ptr)
 {
@@ -19,8 +36,12 @@ void	nm(char *ptr)
 	magic_number = *((int*)ptr);
 	if (magic_number == (int)MH_MAGIC_64)
 		handler_64(ptr);
+	else if (magic_number == (int)MH_CIGAM_64)
+		handler_64_reverse(ptr);
 	else if (magic_number == (int)MH_MAGIC)
 		handler_32(ptr);
+	else if (magic_number == (int)MH_CIGAM)
+		handler_32_reverse(ptr);
 	else if (magic_number == (int)FAT_MAGIC)
 		handler_fat(ptr);
 	else if (magic_number == (int)FAT_CIGAM)
@@ -40,17 +61,17 @@ void	handler_nm(t_env *env)
 		if (env->ac > 2)
 			ft_printf("%s:\n", env->av[i]);
 		if ((fd = open(env->av[i], O_RDONLY)) == -1)
-			ft_printf("OPEN: Can Open this file sorry !\n");
+			ft_error("OPEN: Can Open this file sorry !\n");
 		if (fstat(fd, &buf) == -1)
-			ft_printf("%s\n", strerror(errno));
+			ft_error("FSTAT: Can Fstat this file sorry !\n");;
 		if (buf.st_mode == S_IFDIR)
 			if (env->ac > 2 && env->ac != i)
 				ft_printf("\n");
 		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-			ft_printf("MAP FAILED");
+			ft_error("MAP FAILED\n");
 		nm(ptr);
 		if (munmap(ptr, buf.st_size)	 < 0)
-			ft_printf("MUNMAP");
+			ft_error("MUNMAP FAILED\n");
 		i++;
 	}
 }
@@ -63,7 +84,10 @@ int main(int ac, char **av)
 	env.av = av;
 	if (ac == 1)
 	{
-		// essaie a.out dans le dossier courant puis dans le dossier de nm
+		env.ac = 2;
+		env.av[1] = strdup("a.out");
+		handler_nm(&env);
+		ft_strdel(&env.av[1]);
 	}
 	else
 	{

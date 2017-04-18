@@ -6,13 +6,13 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:09:56 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/03/30 16:17:45 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/18 16:56:05 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "nm.h"
 
-uint32_t little_to_big_32(uint32_t a)
+uint32_t little_to_big_32_uint(uint32_t a)
 {
 	uint32_t	b;
 
@@ -21,4 +21,12 @@ uint32_t little_to_big_32(uint32_t a)
 		((a>>8)&0xff00) |
 		((a<<24)&0xff000000);
 	return (b);
+} 
+
+int little_to_big_32_int(int a)
+{
+	int		b;
+
+	b = ((a << 8) & 0xFF00FF00) | ((a >> 8) & 0xFF00FF ); 
+	return (a << 16) | ((a >> 16) & 0xFFFF);
 }
