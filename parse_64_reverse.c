@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_32.c                                         :+:      :+:    :+:   */
+/*   parse_64.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/30 14:35:07 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 02:54:42 by nahmed-m         ###   ########.fr       */
+/*   Created: 2017/03/30 14:21:02 by nahmed-m          #+#    #+#             */
+/*   Updated: 2017/04/19 00:39:41 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-char	flag_32(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
+char	flag_64_reverse(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
 {
 	char		c;
 
@@ -43,13 +43,13 @@ char	flag_32(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value
 	return (c);
 }
 
-void		get_flag_32(t_compt *compteur, struct load_command *lc)
+void		get_flag_64_reverse(t_compt *compteur, struct load_command *lc)
 {
-	struct segment_command  *sas;
-	struct section *tet;
+	struct segment_command_64  *sas;
+	struct section_64 *tet;
 
-	sas = (struct segment_command*)lc;
-	tet = (struct section*)((char *)sas + sizeof(struct segment_command));
+	sas = (struct segment_command_64*)lc;
+	tet = (struct section_64 *)((char *)sas + sizeof(struct segment_command_64));
 	unsigned int j = 0;
 	while (j < sas->nsects)
 	{
@@ -67,10 +67,10 @@ void		get_flag_32(t_compt *compteur, struct load_command *lc)
 	}
 }
 
-void	print_output_32(struct symtab_command *sym, char *ptr, t_compt *compteur)
+void	print_output_64_reverse(struct symtab_command *sym, char *ptr, t_compt *compteur)
 {
 	unsigned int		i;
-	struct	nlist *el;
+	struct	nlist_64 *el;
 	char	*stringtable;
 	t_sort	*sort;
 	char	c;
@@ -81,40 +81,40 @@ void	print_output_32(struct symtab_command *sym, char *ptr, t_compt *compteur)
 	i = 0;
 	while (i < sym->nsyms)
 	{
-		c = flag_32(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);
+		c = flag_64(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);
 		if (ft_strcmp(stringtable + el[i].n_un.n_strx, "radr://5614542"))
 			add_list(el[i].n_value, c, stringtable + el[i].n_un.n_strx, &sort);
 		i++;
 	}
 	sort_list(&sort);
-	print_list(sort, 32);
+	print_list(sort, 1);
 	del_list(&sort);
 }
 
 
-void	handler_32(char *ptr)
+void	handler_64_reverse(char *ptr)
 {
-	struct mach_header		*header;
+	struct mach_header_64	*header;
 	struct load_command		*lc;
 	struct symtab_command	*sym;
 	int						ncmds;
 	int						i;
 	t_compt compteur;
 	i = 0;
-	header = (struct mach_header*)ptr;
+	header = (struct mach_header_64*)ptr;
 	ncmds = header->ncmds;
-	lc = (void*)(ptr + sizeof(struct mach_header));
+	lc = (void*)(ptr + sizeof(struct mach_header_64));
 	compteur.k = 0;
 	while (i < ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sym = (struct symtab_command*)lc;
-			print_output_32(sym, ptr, &compteur);
+			print_output_64(sym, ptr, &compteur);
 			break;
 		}
-		if (lc->cmd == LC_SEGMENT)
-			get_flag_32(&compteur, lc);
+		if (lc->cmd == LC_SEGMENT_64)
+			get_flag_64(&compteur, lc);
 		lc = (void*)lc + lc->cmdsize;
 		i++;
 	}

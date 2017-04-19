@@ -6,13 +6,13 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:35:07 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 02:54:42 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/19 00:39:07 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-char	flag_32(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
+char	flag_32_reverse(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
 {
 	char		c;
 
@@ -43,7 +43,7 @@ char	flag_32(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value
 	return (c);
 }
 
-void		get_flag_32(t_compt *compteur, struct load_command *lc)
+void		get_flag_32_reverse(t_compt *compteur, struct load_command *lc)
 {
 	struct segment_command  *sas;
 	struct section *tet;
@@ -67,7 +67,7 @@ void		get_flag_32(t_compt *compteur, struct load_command *lc)
 	}
 }
 
-void	print_output_32(struct symtab_command *sym, char *ptr, t_compt *compteur)
+void	print_output_32_reverse(struct symtab_command *sym, char *ptr, t_compt *compteur)
 {
 	unsigned int		i;
 	struct	nlist *el;
@@ -92,7 +92,7 @@ void	print_output_32(struct symtab_command *sym, char *ptr, t_compt *compteur)
 }
 
 
-void	handler_32(char *ptr)
+void	handler_32_reverse(char *ptr)
 {
 	struct mach_header		*header;
 	struct load_command		*lc;

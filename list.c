@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 17:37:38 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/18 18:54:31 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/19 00:32:57 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ void print_list(t_sort *list, int on)
 		{
 			if (on == 1)
 			{
-			if (tmp->value != 0)
+			if (tmp->value != 0 || (tmp->value == 0 && tmp->c == 'T'))
 				ft_printf("%016zx ", tmp->value);
 			else
 				ft_printf("%17 ");
 			}
 			else
 			{
-			if (tmp->value != 0)
+			if (tmp->value != 0 || (tmp->value == 0 && tmp->c == 'T'))
 				ft_printf("%08zx ", tmp->value);
 			else
 				ft_printf("%9 ");
