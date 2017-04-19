@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:35:07 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 02:54:42 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:28:24 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	print_output_32(struct symtab_command *sym, char *ptr, t_compt *compteur)
 	el = (void*)ptr + sym->symoff;
 	stringtable = (void*)ptr +  sym->stroff;
 	i = 0;
+	ft_printf("nb : %d \n", sym->nsyms);
+	exit(1);
 	while (i < sym->nsyms)
 	{
 		c = flag_32(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);

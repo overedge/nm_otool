@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 01:06:36 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/19 16:02:57 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_error(char *str_error)
 	exit(EXIT_FAILURE);
 }
 
-void	nm(char *ptr)
+void	nm(char *ptr, char *argv)
 {
 	int		magic_number;
 
@@ -33,11 +33,11 @@ void	nm(char *ptr)
 	else if (magic_number == (int)MH_CIGAM)
 		handler_32_reverse(ptr);
 	else if (magic_number == (int)FAT_MAGIC)
-		handler_fat(ptr);
+		handler_fat(ptr, argv);
 	else if (magic_number == (int)FAT_CIGAM)
-		handler_fat(ptr);
+		handler_fat(ptr, argv);
 	else if (magic_number == (int)MN_LIB)
-		handler_lib(ptr);
+		handler_lib(ptr, argv);
 }
 
 void	handler_nm(t_env *env)
@@ -60,8 +60,8 @@ void	handler_nm(t_env *env)
 				ft_printf("\n");
 		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 			ft_error("MAP FAILED\n");
-		nm(ptr);
-		if (munmap(ptr, buf.st_size)	 < 0)
+		nm(ptr, env->av[i]);
+		if (munmap(ptr, buf.st_size) < 0)
 			ft_error("MUNMAP FAILED\n");
 		if (close(fd) == -1)
 		ft_error("Error with close fd\n");

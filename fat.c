@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 15:34:04 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/18 18:04:52 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:52:46 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*verify_arch(t_fat_ptr *list)
 {
 	while (list)
 	{
-		if (list->cputype == CPU_TYPE_I386)
+		if (list->cputype == CPU_TYPE_X86_64)
 			return (list->ptr);
 		list = list->next;
 	}
@@ -64,14 +64,15 @@ void	print_arch(int cputype)
 		ft_printf("unknow arch :\n");
 }
 
-void	print_fat_list(t_fat_ptr **list)
+void	print_fat_list(t_fat_ptr **list, char *argv)
 {
 	t_fat_ptr	*freeme;
 
 	while (*list)
 	{
+		ft_printf("(%s) ", argv);
 		print_arch((*list)->cputype);
-		nm((char*)(*list)->ptr);
+		nm((char*)(*list)->ptr, argv);
 		ft_putchar('\n');
 		freeme = *list;
 		*list = (*list)->next;
@@ -80,7 +81,7 @@ void	print_fat_list(t_fat_ptr **list)
 }
 
 
-void	handler_fat(char *ptr)
+void	handler_fat(char *ptr, char *argv)
 {
 	struct	fat_header *header;
 	struct	fat_arch *arch;
@@ -95,11 +96,10 @@ void	handler_fat(char *ptr)
 	{
 		add_to_fat_list(&list, (void*)(ptr + little_to_big_32_uint(arch->offset)), arch->cputype);
 		arch = (void*)arch + sizeof(struct fat_arch);
-
 		i++;
 	}
 	if (verify_arch(list) != NULL && list)
-		nm((char*)verify_arch(list));
+		nm((char*)verify_arch(list), argv);
 	else if (list)
-		print_fat_list(&list);
+		print_fat_list(&list, argv);
 }
