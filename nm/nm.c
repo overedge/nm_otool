@@ -6,12 +6,11 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 17:55:17 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 22:22:19 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
-
 
 void	ft_error(char *str_error)
 {
@@ -38,19 +37,19 @@ void	nm(char *ptr, char *argv)
 		handler_fat(ptr, argv);
 	else if (magic_number == (int)MN_LIB)
 		handler_lib(ptr, argv);
-	else 
+	else
 		ft_error("Sorry this file are not supported now !\n");
 }
 
 void	handler_nm(t_env *env)
 {
-	int		i;
-	int		fd;
-	struct stat buf;
-	char	*ptr;
+	int				i;
+	int				fd;
+	struct stat		buf;
+	char			*ptr;
 
-	i = 1;
-	while (i < env->ac)
+	i = 0;
+	while (++i < env->ac)
 	{
 		if (env->ac > 2)
 			ft_printf("%s:\n", env->av[i]);
@@ -58,20 +57,20 @@ void	handler_nm(t_env *env)
 			ft_error("OPEN: Can Open this file sorry !\n");
 		if (fstat(fd, &buf) == -1)
 			ft_error("FSTAT: Can Fstat this file sorry !\n");
-			if (env->ac > 2 && env->ac != i)
-				ft_printf("\n");
-		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+		if (env->ac > 2 && env->ac != i)
+			ft_printf("\n");
+		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))\
+				== MAP_FAILED)
 			ft_error("MAP FAILED\n");
 		nm(ptr, env->av[i]);
 		if (munmap(ptr, buf.st_size) < 0)
 			ft_error("MUNMAP FAILED\n");
 		if (close(fd) == -1)
-		ft_error("Error with close fd\n");
-		i++;
+			ft_error("Error with close fd\n");
 	}
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_env env;
 

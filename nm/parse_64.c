@@ -6,19 +6,31 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:21:02 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 17:50:11 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 22:09:02 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-char	flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
+static char	flag2(uint8_t n_type, char c)
+{
+	if ((n_type & N_TYPE) == N_ABS)
+		c = 'a';
+	else if ((n_type & N_TYPE) == N_INDR)
+		c = 'i';
+	if ((n_type & N_EXT) != 0 && c != '?')
+		c = ft_toupper(c);
+	return (c);
+}
+
+char		flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur,\
+		uint64_t n_value)
 {
 	char		c;
 
 	c = '?';
 	if ((n_type & N_TYPE) == N_UNDF)
-	{	
+	{
 		c = 'u';
 		if (n_value != 0)
 			c = 'c';
@@ -36,32 +48,28 @@ char	flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
 		else
 			c = 's';
 	}
-	else if ((n_type & N_TYPE) == N_ABS)
-		c = 'a';
-	else if ((n_type & N_TYPE) == N_INDR)
-		c = 'i';
-	if ((n_type & N_EXT) != 0 && c != '?')
-		c = ft_toupper(c);
-	return (c);
+	return (flag2(n_type, c));
 }
 
 void		get_flag_64(t_compt *compteur, struct load_command *lc)
 {
-	struct segment_command_64  *sas;
-	struct section_64 *tet;
+	struct segment_command_64	*sas;
+	struct section_64			*tet;
+	unsigned int				j;
 
+	j = 0;
 	sas = (struct segment_command_64*)lc;
-	tet = (struct section_64 *)((char *)sas + sizeof(struct segment_command_64));
-	unsigned int j = 0;
+	tet = (struct section_64 *)((char *)sas + \
+			sizeof(struct segment_command_64));
 	while (j < sas->nsects)
 	{
-		if(ft_strcmp((tet + j)->sectname, SECT_TEXT) == 0 &&
+		if (ft_strcmp((tet + j)->sectname, SECT_TEXT) == 0 &&
 				ft_strcmp((tet + j)->segname, SEG_TEXT) == 0)
 			compteur->text = compteur->k + 1;
-		else if(ft_strcmp((tet + j)->sectname, SECT_DATA) == 0 &&
+		else if (ft_strcmp((tet + j)->sectname, SECT_DATA) == 0 &&
 				ft_strcmp((tet + j)->segname, SEG_DATA) == 0)
 			compteur->data = compteur->k + 1;
-		else if(ft_strcmp((tet + j)->sectname, SECT_BSS) == 0 &&
+		else if (ft_strcmp((tet + j)->sectname, SECT_BSS) == 0 &&
 				ft_strcmp((tet + j)->segname, SEG_DATA) == 0)
 			compteur->bss = compteur->k + 1;
 		j++;
@@ -69,17 +77,18 @@ void		get_flag_64(t_compt *compteur, struct load_command *lc)
 	}
 }
 
-void	print_output_64(struct symtab_command *sym, char *ptr, t_compt *compteur)
+void		print_output_64(struct symtab_command *sym, char *ptr,\
+		t_compt *compteur)
 {
 	unsigned int		i;
-	struct	nlist_64 *el;
-	char	*stringtable;
-	t_sort	*sort;
-	char	c;
+	struct nlist_64		*el;
+	char				*stringtable;
+	t_sort				*sort;
+	char				c;
 
 	sort = NULL;
 	el = (void*)ptr + sym->symoff;
-	stringtable = (void*)ptr +  sym->stroff;
+	stringtable = (void*)ptr + sym->stroff;
 	i = 0;
 	while (i < sym->nsyms)
 	{
@@ -93,27 +102,25 @@ void	print_output_64(struct symtab_command *sym, char *ptr, t_compt *compteur)
 	del_list(&sort);
 }
 
-
-void	handler_64(char *ptr)
+void		handler_64(char *ptr)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
 	struct symtab_command	*sym;
-	int						ncmds;
-	int						i;
-	t_compt compteur;
+	unsigned int			i;
+	t_compt					compteur;
+
 	i = 0;
 	header = (struct mach_header_64*)ptr;
-	ncmds = header->ncmds;
 	lc = (void*)(ptr + sizeof(struct mach_header_64));
 	compteur.k = 0;
-	while (i < ncmds)
+	while (i < header->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sym = (struct symtab_command*)lc;
 			print_output_64(sym, ptr, &compteur);
-			break;
+			break ;
 		}
 		if (lc->cmd == LC_SEGMENT_64)
 			get_flag_64(&compteur, lc);

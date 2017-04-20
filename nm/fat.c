@@ -6,16 +6,16 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 15:34:04 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 18:17:39 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 23:20:37 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "nm.h"
+#include "nm.h"
 
 void	add_to_fat_list(t_fat_ptr **list, void *offset, cpu_type_t cputype)
 {
 	t_fat_ptr *ptr;
-	
+
 	ptr = *list;
 	if (!*list)
 	{
@@ -82,13 +82,12 @@ void	print_fat_list(t_fat_ptr **list, char *argv)
 	}
 }
 
-
 void	handler_fat(char *ptr, char *argv)
 {
-	struct	fat_header *header;
-	struct	fat_arch *arch;
-	int		i;
-	t_fat_ptr		*list;
+	struct fat_header	*header;
+	struct fat_arch		*arch;
+	int					i;
+	t_fat_ptr			*list;
 
 	header = (struct fat_header*)ptr;
 	arch = (void*)(ptr + sizeof(struct fat_header));
@@ -96,7 +95,8 @@ void	handler_fat(char *ptr, char *argv)
 	i = 0;
 	while (i < (int)little_to_big_32_uint(header->nfat_arch))
 	{
-		add_to_fat_list(&list, (void*)(ptr + little_to_big_32_uint(arch->offset)), arch->cputype);
+		add_to_fat_list(&list, (void*)(ptr + \
+					little_to_big_32_uint(arch->offset)), arch->cputype);
 		arch = (void*)arch + sizeof(struct fat_arch);
 		i++;
 	}
