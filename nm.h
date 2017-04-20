@@ -58,7 +58,6 @@ void	handler_64_reverse(char *ptr);
 void	handler_64(char *ptr);
 void	get_flag_64(t_compt *compteur, struct load_command *lc);
 void	print_output_64(struct symtab_command *sym, char* ptr, t_compt *compteur);
-char	flag_64(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t);
 /*
 ** Handler 32
 */
@@ -66,17 +65,16 @@ void	handler_32_reverse(char *ptr);
 void	handler_32(char *ptr);
 void	get_flag_32(t_compt *compteur, struct load_command *lc);
 void	print_output_32(struct symtab_command *sym, char* ptr, t_compt *compteur);
-char	flag_32(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t);
 /*
 ** Handler Fat && lib
 */
 void	handler_fat(char *ptr, char *argv);
 void	handler_lib(char *ptr, char *argv);
 /*
-** Conversion 
+** Conversion & utils
 */
 uint32_t  little_to_big_32_uint(uint32_t a);
-uint8_t  byte_to_reverse(uint8_t a);
-uint64_t swap_long(uint64_t a);
-
+char	flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t);
+void	ft_error(char *str_error);
+void	delete_fat_list(t_fat_ptr **list);
 #endif

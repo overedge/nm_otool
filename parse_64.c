@@ -6,13 +6,13 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:21:02 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 18:18:15 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 17:50:11 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm.h"
 
-char	flag_64(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
+char	flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value)
 {
 	char		c;
 
@@ -36,6 +36,8 @@ char	flag_64(uint8_t n_type, uint8_t n_sect, t_compt *compteur, uint64_t n_value
 		else
 			c = 's';
 	}
+	else if ((n_type & N_TYPE) == N_ABS)
+		c = 'a';
 	else if ((n_type & N_TYPE) == N_INDR)
 		c = 'i';
 	if ((n_type & N_EXT) != 0 && c != '?')
@@ -81,7 +83,7 @@ void	print_output_64(struct symtab_command *sym, char *ptr, t_compt *compteur)
 	i = 0;
 	while (i < sym->nsyms)
 	{
-		c = flag_64(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);
+		c = flag(el[i].n_type, el[i].n_sect, compteur, el[i].n_value);
 		if (ft_strcmp(stringtable + el[i].n_un.n_strx, "radr://5614542"))
 			add_list(el[i].n_value, c, stringtable + el[i].n_un.n_strx, &sort);
 		i++;

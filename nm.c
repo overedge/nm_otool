@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 16:02:57 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 17:55:17 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	nm(char *ptr, char *argv)
 		handler_fat(ptr, argv);
 	else if (magic_number == (int)MN_LIB)
 		handler_lib(ptr, argv);
+	else 
+		ft_error("Sorry this file are not supported now !\n");
 }
 
 void	handler_nm(t_env *env)

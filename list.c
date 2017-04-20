@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 17:37:38 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 00:32:57 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 18:09:16 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	add_list(unsigned long long value, char c, char *str, t_sort **list)
 	t_sort *tmp;
 	t_sort *tmp2;
 
-	tmp = (t_sort*)malloc(sizeof(t_sort));
+	if ((tmp = (t_sort*)malloc(sizeof(t_sort))) == NULL)
+		ft_error("MALLOC ERROR \n");
 	tmp->value = value;
 	tmp->c = c;
 	tmp->str = strdup(str);
@@ -70,7 +71,7 @@ void print_list(t_sort *list, int on)
 	tmp = list;
 	while (tmp)
 	{
-	if (tmp->c != '?' && tmp->c != 'u' && ft_strcmp("", tmp->str))
+		if (tmp->c != '?' && tmp->c != 'u' && ft_strcmp("", tmp->str))
 		{
 			if (on == 1)
 			{

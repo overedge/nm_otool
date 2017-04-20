@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 15:34:04 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/19 17:52:46 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/20 18:17:39 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	add_to_fat_list(t_fat_ptr **list, void *offset, cpu_type_t cputype)
 	ptr = *list;
 	if (!*list)
 	{
-		ptr = (t_fat_ptr*)malloc(sizeof(t_fat_ptr));
+		if ((ptr = (t_fat_ptr*)malloc(sizeof(t_fat_ptr))) == NULL)
+			ft_error("MALLOC ERROR\n");
 		ptr->ptr = offset;
 		ptr->cputype = little_to_big_32_uint(cputype);
 		ptr->next = NULL;
@@ -29,7 +30,8 @@ void	add_to_fat_list(t_fat_ptr **list, void *offset, cpu_type_t cputype)
 	{
 		while (ptr->next != NULL)
 			ptr = ptr->next;
-		ptr->next = (t_fat_ptr*)malloc(sizeof(t_fat_ptr));
+		if ((ptr->next = (t_fat_ptr*)malloc(sizeof(t_fat_ptr))) == NULL)
+			ft_error("MALLOC ERROR\n");
 		ptr = ptr->next;
 		ptr->ptr = offset;
 		ptr->cputype = little_to_big_32_uint(cputype);
@@ -59,7 +61,7 @@ void	print_arch(int cputype)
 	else if (cputype == CPU_TYPE_ARM64)
 		ft_printf("arm64 :\n");
 	else if (cputype == CPU_TYPE_POWERPC)
-		ft_printf("powerpc :\n");
+		ft_printf("ppc :\n");
 	else
 		ft_printf("unknow arch :\n");
 }
@@ -99,7 +101,10 @@ void	handler_fat(char *ptr, char *argv)
 		i++;
 	}
 	if (verify_arch(list) != NULL && list)
+	{
 		nm((char*)verify_arch(list), argv);
+		delete_fat_list(&list);
+	}
 	else if (list)
 		print_fat_list(&list, argv);
 }
