@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 22:22:19 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:29:28 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	ft_error(char *str_error)
 	exit(EXIT_FAILURE);
 }
 
-void	nm(char *ptr, char *argv)
+void	otool(char *ptr, char *argv)
 {
 	int		magic_number;
 
 	magic_number = *((int*)ptr);
 	if (magic_number == (int)MH_MAGIC_64)
-		handler_64(ptr);
+		handler_64(ptr, argv);
 	else if (magic_number == (int)MH_CIGAM_64)
 		handler_64_reverse(ptr);
 	else if (magic_number == (int)MH_MAGIC)
@@ -62,7 +62,7 @@ void	handler_nm(t_env *env)
 		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))\
 				== MAP_FAILED)
 			ft_error("MAP FAILED\n");
-		nm(ptr, env->av[i]);
+		otool(ptr, env->av[i]);
 		if (munmap(ptr, buf.st_size) < 0)
 			ft_error("MUNMAP FAILED\n");
 		if (close(fd) == -1)

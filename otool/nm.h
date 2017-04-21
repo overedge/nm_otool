@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 22:13:21 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/21 12:28:21 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:35:07 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,11 @@ typedef struct			s_fat_ptr {
 }						t_fat_ptr;
 
 /*
-** List functions
-*/
-void					add_list(unsigned long long value, char c, char *str, \
-						t_sort **list);
-void					print_list(t_sort *list, int on);
-void					sort_list(t_sort **list);
-void					del_list(t_sort **list);
-/*
 ** Handler 64
 */
-void					nm(char *ptr, char *argv);
+void					otool(char *ptr, char *argv);
 void					handler_64_reverse(char *ptr);
-void					handler_64(char *ptr);
+void					handler_64(char *ptr, char *argv);
 void					print_output_64(struct symtab_command *sym, char *ptr,\
 						t_compt *compteur);
 /*
@@ -76,8 +68,6 @@ void					print_output_64(struct symtab_command *sym, char *ptr,\
 void					handler_32_reverse(char *ptr);
 void					handler_32(char *ptr);
 void					get_flag_32(t_compt *compteur, struct load_command *lc);
-void					print_output_32(struct symtab_command *sym, char *ptr,\
-						t_compt *compteur);
 /*
 ** Handler Fat && lib
 */
@@ -87,8 +77,6 @@ void					handler_lib(char *ptr, char *argv);
 ** Conversion & utils
 */
 uint32_t				little_to_big_32_uint(uint32_t a);
-char					flag(uint8_t n_type, uint8_t n_sect, t_compt *compteur,\
-						uint64_t n_value);
 void					ft_error(char *str_error);
 void					delete_fat_list(t_fat_ptr **list);
 #endif

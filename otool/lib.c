@@ -6,7 +6,7 @@
 /*   By: nahmed-m <nahmed-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 01:06:47 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 23:23:23 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:38:52 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	handler_lib(char *ptr, char *argv)
 		ft_putchar('\n');
 		ft_printf("%s(%s):\n", argv, (char*)(ptr + 0x44));
 		if (ft_strlen((char*)(ptr + 0x44)) >= 19)
-			nm((void*)(ptr + 0x60), argv);
+			otool((void*)(ptr + 0x60), argv);
 		else if (ft_strlen((char*)(ptr + 0x44)) > 8)
-			nm((void*)(ptr + 0x58), argv);
+			otool((void*)(ptr + 0x58), argv);
 		else
-			nm((void*)(ptr + 0x50), argv);
+			otool((void*)(ptr + 0x50), argv);
 		ptr = (char*)((void*)ptr + size + 0x3C);
 		if (size == 0)
 			break ;

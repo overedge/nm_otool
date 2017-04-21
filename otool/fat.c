@@ -6,7 +6,7 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 15:34:04 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 23:20:37 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/21 16:40:23 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_fat_list(t_fat_ptr **list, char *argv)
 	{
 		ft_printf("(%s) ", argv);
 		print_arch((*list)->cputype);
-		nm((char*)(*list)->ptr, argv);
+		otool((char*)(*list)->ptr, argv);
 		ft_putchar('\n');
 		freeme = *list;
 		*list = (*list)->next;
@@ -102,7 +102,7 @@ void	handler_fat(char *ptr, char *argv)
 	}
 	if (verify_arch(list) != NULL && list)
 	{
-		nm((char*)verify_arch(list), argv);
+		otool((char*)verify_arch(list), argv);
 		delete_fat_list(&list);
 	}
 	else if (list)
