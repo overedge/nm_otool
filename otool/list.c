@@ -6,11 +6,11 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 17:37:38 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 23:16:24 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:10:42 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "otool.h"
 
 void	sort_list(t_sort **list)
 {

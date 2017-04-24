@@ -6,11 +6,11 @@
 /*   By: nahmed-m <nahmed-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 01:06:47 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/21 16:38:52 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:10:13 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "otool.h"
 
 void	handler_lib(char *ptr, char *argv)
 {

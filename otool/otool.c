@@ -6,11 +6,11 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:34:36 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/21 16:29:28 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:11:57 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "otool.h"
 
 void	ft_error(char *str_error)
 {
@@ -26,11 +26,11 @@ void	otool(char *ptr, char *argv)
 	if (magic_number == (int)MH_MAGIC_64)
 		handler_64(ptr, argv);
 	else if (magic_number == (int)MH_CIGAM_64)
-		handler_64_reverse(ptr);
+		handler_64_reverse(ptr, argv);
 	else if (magic_number == (int)MH_MAGIC)
-		handler_32(ptr);
+		handler_32(ptr, argv);
 	else if (magic_number == (int)MH_CIGAM)
-		handler_32_reverse(ptr);
+		handler_32_reverse(ptr, argv);
 	else if (magic_number == (int)FAT_MAGIC)
 		handler_fat(ptr, argv);
 	else if (magic_number == (int)FAT_CIGAM)
@@ -51,8 +51,6 @@ void	handler_nm(t_env *env)
 	i = 0;
 	while (++i < env->ac)
 	{
-		if (env->ac > 2)
-			ft_printf("%s:\n", env->av[i]);
 		if ((fd = open(env->av[i], O_RDONLY)) == -1)
 			ft_error("OPEN: Can Open this file sorry !\n");
 		if (fstat(fd, &buf) == -1)

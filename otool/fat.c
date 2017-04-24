@@ -6,11 +6,11 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 15:34:04 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/21 16:40:23 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:10:13 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "otool.h"
 
 void	add_to_fat_list(t_fat_ptr **list, void *offset, cpu_type_t cputype)
 {
@@ -53,17 +53,17 @@ void	*verify_arch(t_fat_ptr *list)
 void	print_arch(int cputype)
 {
 	if (cputype == CPU_TYPE_I386)
-		ft_printf("i386 :\n");
+		ft_printf("i386):\n");
 	else if (cputype == CPU_TYPE_X86_64)
-		ft_printf("x86_64 :\n");
+		ft_printf("x86_64):\n");
 	else if (cputype == CPU_TYPE_ARM)
-		ft_printf("arm :\n");
+		ft_printf("arm):\n");
 	else if (cputype == CPU_TYPE_ARM64)
-		ft_printf("arm64 :\n");
+		ft_printf("arm64):\n");
 	else if (cputype == CPU_TYPE_POWERPC)
-		ft_printf("ppc :\n");
+		ft_printf("ppc):\n");
 	else
-		ft_printf("unknow arch :\n");
+		ft_printf("unknow arch):\n");
 }
 
 void	print_fat_list(t_fat_ptr **list, char *argv)
@@ -72,9 +72,9 @@ void	print_fat_list(t_fat_ptr **list, char *argv)
 
 	while (*list)
 	{
-		ft_printf("(%s) ", argv);
+		ft_printf("%s (architecture ", argv);
 		print_arch((*list)->cputype);
-		otool((char*)(*list)->ptr, argv);
+		otool((char*)(*list)->ptr, NULL);
 		ft_putchar('\n');
 		freeme = *list;
 		*list = (*list)->next;

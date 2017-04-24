@@ -6,11 +6,11 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:09:56 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/20 18:28:24 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:10:43 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "otool.h"
 
 uint32_t	little_to_big_32_uint(uint32_t a)
 {

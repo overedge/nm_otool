@@ -1,4 +1,4 @@
-SRC_NAME = nm.c parse_64.c parse_32.c fat.c conversion.c \
+SRC_NAME = otool.c parse_64.c parse_32.c fat.c conversion.c \
 parse_32_reverse.c parse_64_reverse.c lib.c
 
 NAME = "ft_otool"

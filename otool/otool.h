@@ -6,12 +6,12 @@
 /*   By: nahmed-m <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 22:13:21 by nahmed-m          #+#    #+#             */
-/*   Updated: 2017/04/21 16:35:07 by nahmed-m         ###   ########.fr       */
+/*   Updated: 2017/04/24 16:14:48 by nahmed-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NM_H
-# define NM_H
+#ifndef OTOOL_H
+# define OTOOL_H
 
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
@@ -58,16 +58,16 @@ typedef struct			s_fat_ptr {
 ** Handler 64
 */
 void					otool(char *ptr, char *argv);
-void					handler_64_reverse(char *ptr);
+void					handler_64_reverse(char *ptr, char *argv);
 void					handler_64(char *ptr, char *argv);
 void					print_output_64(struct symtab_command *sym, char *ptr,\
 						t_compt *compteur);
 /*
 ** Handler 32
 */
-void					handler_32_reverse(char *ptr);
-void					handler_32(char *ptr);
-void					get_flag_32(t_compt *compteur, struct load_command *lc);
+void					handler_32_reverse(char *ptr, char *argv);
+void					handler_32(char *ptr, char *argv);
+void					get_flag_32(struct load_command *lc, char *ptr);
 /*
 ** Handler Fat && lib
 */
